@@ -126,5 +126,17 @@ $(function(){
 			createStars($('input[type=range]').val());
 			Engine.start();
 		},100);
+	}).on('input',function(){
+		changeTimeout = setTimeout(function(){
+		clearInterval(moveStarsInterval);
+			clearTimeout(changeTimeout);
+			$('.starCount').html($('input[type=range]').val());
+			ctx.fillStyle = 'black';
+			ctx.fillRect(0,0,canvas.width,canvas.height);
+			Engine.pause();
+			Engine.clearObjects();
+			createStars($('input[type=range]').val());
+			Engine.start();
+		},100);
 	});
 });
