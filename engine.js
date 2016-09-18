@@ -17,8 +17,9 @@ function GameEngine(canvas){
 	// the list of objects that need to be continuously rendered:
 	this.objects = [];
 	var objects = this.objects;
-	// draw function
-	
+	this.clearObjects = function(){
+		that.objects.splice(0,that.objects.length);
+	}
 	this.matchObjNames = function(str){
 		var matched = [];
 		for(var o in that.objects){
@@ -29,7 +30,7 @@ function GameEngine(canvas){
 		}
 		return matched;
 	}
-	
+	// draw function
 	this.bgColor = 'blue';
 	this.perDrawCallback = null;
 	this.draw = function(){
