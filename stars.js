@@ -78,11 +78,22 @@ var generateRandomStar = function(maxY = canvas.height){
 	Engine.addObject(Star,x,y);
 }
 
-var starAmount = 2000;
-var createStars = function(){
+var moveStarsInterval = 0;
+var createStars = function(starAmount){
 	for(var c = 0;c < starAmount;c++){
 		generateRandomStar();
 	}
+	
+	moveStarsInterval = setInterval(function(){
+		for(var i in Engine.objects){
+			var star = Engine.objects[i];
+			star.y+=1;
+			if(star.y > canvas.height || star.y < 0 || star.x < 0 || star.x > canvas.width){
+				star.y = -(Math.random()*500);
+				star.x = Math.random()*canvas.width;
+			}
+		}
+	},50);
 }
 
 $(function(){
@@ -97,18 +108,23 @@ $(function(){
 	Engine = new GameEngine(canvas);
 	Engine.bgColor = 'black';
 	Engine.start();
-	
-	createStars();
-	setInterval(function(){
-		for(var i in Engine.objects){
-			var star = Engine.objects[i];
-			star.y+=1;
-			if(star.y > canvas.height || star.y < 0 || star.x < 0 || star.x > canvas.width){
-				star.y = -(Math.random()*500);
-				star.x = Math.random()*canvas.width;
-			}
-		}
-	},50);
+	$('input[type=range]').val(2000);
+	createStars(2000);
 	//setTimeout(Engine.pause,1000);
 	//Engine.highlightObj(Engine.objects[32]);
+	
+	var changeTimeout = 0;
+	$('input[type=range]').on('change',function(){
+		changeTimeout = setTimeout(function(){
+		clearInterval(moveStarsInterval);
+			clearTimeout(changeTimeout);
+			$('.starCount').html($('input[type=range]').val());
+			ctx.fillStyle = 'black';
+			ctx.fillRect(0,0,canvas.width,canvas.height);
+			Engine.pause();
+			Engine.clearObjects();
+			createStars($('input[type=range]').val());
+			Engine.start();
+		},100);
+	});
 });
