@@ -1,10 +1,22 @@
 <html>
 <head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-<script src="engine.js"></script>
+<script src="../../engine/vectors.js"></script>
+<script src="../../engine/sprites.js"></script>
+<script src="../../engine/animation.js"></script>
+<script src="../../engine/engine.js"></script>
 <script src="stars.js"></script>
+<style>
+body{
+font-family:arial;
+}
+</style>
 </head>
 <body>
 <canvas width="1000px" height="700px"></canvas>
+</br>
+<span>Star Count: </span>
+<input type="range" min=0 max=3000 step=1 style="width:800px;border:solid 2px black"></input>
+<span class="starCount"></span>
 </body>
 </html>
